@@ -1,0 +1,33 @@
+#login {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition-duration: 0.4s;
+  align-self: flex-start;
+  margin: 10px;
+}
+
+#login:hover {
+  background-color: #45a049;
+}
+
+body {
+  background: black;
+}
+
+#main {
+  display: flex;
+}
+
+canvas {
+  border: 1px solid black; 
+  background: white; 
+  margin: 10px;
+}

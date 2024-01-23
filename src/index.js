@@ -1,22 +1,25 @@
 import powerUpSound from "url:../assets/PowerUp1.wav";
+import mint from "./mint.js";
+import "./login.js";
 
 const soundEffect = new Audio(powerUpSound);
 
+const scale = 2;
 const DOWN = 0,
   UP = 1,
   LEFT = 2,
   RIGHT = 3;
 let currentDirection = DOWN;
 let currentFrame = 0;
-const frameWidth = 16,
-  frameHeight = 16;
+const frameWidth = 16 * scale,
+  frameHeight = 16 * scale;
 const spriteSheetRows = 4;
 const frameDelay = 10;
 let frameCount = 0;
 
-let heroX = 200,
-  heroY = 200;
-const moveSpeed = 2;
+let heroX = 200 * scale,
+  heroY = 200 * scale;
+const moveSpeed = 1.5 * scale;
 const keysPressed = {
   ArrowUp: false,
   ArrowDown: false,
@@ -27,8 +30,8 @@ const keysPressed = {
 let shrimpX, shrimpY;
 
 function spawnShrimp() {
-  shrimpX = Math.floor(Math.random() * (384 / frameWidth)) * frameWidth;
-  shrimpY = Math.floor(Math.random() * (384 / frameHeight)) * frameHeight;
+  shrimpX = Math.floor(Math.random() * (784 / frameWidth)) * frameWidth;
+  shrimpY = Math.floor(Math.random() * (784 / frameHeight)) * frameHeight;
 }
 
 function checkCollision() {
@@ -47,16 +50,20 @@ function gameLoop() {
   const ctx = canvas.getContext("2d");
 
   const isMoving = updateHeroPosition();
-  const frameX = currentDirection * frameWidth;
-  const frameY = currentFrame * frameHeight;
+
+  // Source rectangle coordinates should not be scaled
+  const frameX = currentDirection * 16; // Original frame width (16) for sourceX
+  const frameY = currentFrame * 16; // Original frame height (16) for sourceY
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Scale only the destination rectangle
   ctx.drawImage(
     img,
     frameX,
     frameY,
-    frameWidth,
-    frameHeight,
+    16,
+    16,
     heroX,
     heroY,
     frameWidth,
@@ -76,6 +83,7 @@ function gameLoop() {
 
   if (checkCollision()) {
     soundEffect.play();
+    mint();
     spawnShrimp();
   }
 
