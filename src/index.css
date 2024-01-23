@@ -10,12 +10,19 @@
   cursor: pointer;
   border-radius: 8px;
   transition-duration: 0.4s;
-  align-self: flex-start;
-  margin: 10px;
 }
 
 #login:hover {
   background-color: #45a049;
+}
+
+#address, #login {
+  align-self: flex-start;
+  margin: 10px;
+}
+
+#address {
+  color: white;
 }
 
 body {
