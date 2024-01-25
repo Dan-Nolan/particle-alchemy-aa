@@ -11,7 +11,6 @@ import { polygonMumbai } from "viem/chains";
 import { createWalletClient, custom } from "viem";
 
 let provider;
-const entryPointAddress = "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789";
 
 document.getElementById("login").addEventListener("click", async function () {
   const particle = new ParticleNetwork({
@@ -27,12 +26,10 @@ document.getElementById("login").addEventListener("click", async function () {
   provider = new AlchemyProvider({
     apiKey: process.env.ALCHEMY_API_KEY,
     chain: polygonMumbai,
-    entryPointAddress,
   })
     .connect(
       (rpcClient) =>
         new LightSmartContractAccount({
-          entryPointAddress,
           chain: rpcClient.chain,
           owner: new WalletClientSigner(
             createWalletClient({
@@ -46,10 +43,13 @@ document.getElementById("login").addEventListener("click", async function () {
     )
     .withAlchemyGasManager({
       policyId: process.env.ALCHEMY_POLICY_ID,
-      entryPoint: entryPointAddress,
     });
 
   document.getElementById("login").style = "display:none";
   document.getElementById("address").innerText =
     await provider.account.getAddress();
 });
+
+export function getProvider() {
+  return provider;
+}
